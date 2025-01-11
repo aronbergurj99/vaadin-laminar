@@ -11,5 +11,8 @@
   "devDependencies": {
     "vite": "^6.0.5",
     "vite-plugin-scalajs-mill": "^1.0.1"
+  },
+  "dependencies": {
+    "@vaadin/vaadin-core": "~24.6.1"
   }
 }
