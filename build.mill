@@ -1,0 +1,23 @@
+package build
+import mill._, scalalib._, scalajslib._
+import scalajslib.api._
+
+trait AppScalaModule extends ScalaModule {
+  def scalaVersion = "3.3.4"
+}
+
+trait AppScalaJSModule extends AppScalaModule with ScalaJSModule {
+
+  def scalaJSVersion = "1.18.1"
+  def moduleKind = ModuleKind.ESModule
+  def scalaJSSourceMap = false
+
+  def ivyDeps = Agg(
+    ivy"org.scala-js::scalajs-dom::2.8.0",
+    ivy"com.raquo::laminar::17.2.0")
+}
+
+object `package` extends RootModule with AppScalaJSModule {
+  object `vaadin-components` extends AppScalaJSModule 
+  object example extends AppScalaJSModule
+}
