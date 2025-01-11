@@ -7,6 +7,8 @@ import scala.scalajs.js.annotation
 
 import org.scalajs.dom
 
+import webcomponents.vaadin.Button
+
 
 object Main {
     def main(args: Array[String]): Unit = {
@@ -17,8 +19,12 @@ object Main {
         )
     }
 
+
     def appElement = 
         div(
-            h1("hello world")
+            h1(
+                Button("disabled", disabled(true)),
+                Button("enabled")
+            )
         )
 }

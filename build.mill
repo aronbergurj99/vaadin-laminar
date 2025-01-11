@@ -19,5 +19,7 @@ trait AppScalaJSModule extends AppScalaModule with ScalaJSModule {
 
 object `package` extends RootModule with AppScalaJSModule {
   object `vaadin-components` extends AppScalaJSModule 
-  object example extends AppScalaJSModule
+  object example extends AppScalaJSModule {
+    def moduleDeps = Seq(`vaadin-components`)
+  }
 }
