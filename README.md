@@ -1,5 +1,5 @@
 
-# Vaadin Web Components Laminar Bindings
+# Vaadin Web Components Laminar Bindings (WIP ⚠️🚧🏗️)
 
 This project provides Laminar bindings for Vaadin Web Components, enabling seamless integration of Vaadin UI components into Laminar applications.
 
