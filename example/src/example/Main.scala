@@ -12,6 +12,7 @@ import webcomponents.vaadin
 import example.examples.Example
 import example.examples.ButtonExample
 import example.examples.TextFieldExample
+import example.examples.SelectExample
 
 
 object Main {
@@ -35,12 +36,17 @@ object Main {
                         "Button",
                         onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/button") }
                     ),
-
                     vaadin.SideNav.SideNavItem(
                         vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
                         _.path("/text-field"),
                         "TextField",
                         onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/text-field") }
+                    ),
+                    vaadin.SideNav.SideNavItem(
+                        vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
+                        _.path("/select"),
+                        "Select",
+                        onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/select") }
                     )
                 )
             ),
@@ -48,6 +54,7 @@ object Main {
                 div(
                     ButtonExample(),
                     TextFieldExample(),
+                    SelectExample(),
                 )
             )
         )
