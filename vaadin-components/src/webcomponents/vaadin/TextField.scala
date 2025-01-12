@@ -14,23 +14,16 @@ import com.raquo.laminar.codecs.{StringAsIsCodec}
 /**
   * Todo: write doc, implement missing API, WIP!
   */
-object Icon extends WebComponent {
+object TextField extends WebComponent {
     @js.native
-    @JSImport("@vaadin/icon", JSImport.Default)
+    @JSImport("@vaadin/text-field", JSImport.Default)
     object RawImport extends js.Object
-
-    @js.native
-    @JSImport("@vaadin/icons", JSImport.Default)
-    object Icons extends js.Object
-
-    used(Icons)
 
     type Ref = dom.html.Element & js.Object
 
     used(RawImport)
 
-    // Todo: typed
-    lazy val icon: HtmlAttr[String] = htmlAttr("icon", StringAsIsCodec)
+    lazy val label: HtmlAttr[String] = htmlAttr("label", StringAsIsCodec)
 
-    protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-icon")
+    protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-text-field")
 }

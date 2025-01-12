@@ -1,3 +1,5 @@
+import "./styles.css"
+
 import { typography, spacing, color, utility, badge,} from '@vaadin/vaadin-lumo-styles'
 import { addLumoGlobalStyles } from "@vaadin/vaadin-lumo-styles/global"
 
