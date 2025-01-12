@@ -11,3 +11,22 @@ body {
 html {
     --lumo-font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
+
+vaadin-scroller[slot='drawer'] {
+    flex: auto;
+    padding: var(--lumo-space-s);
+  }
+  
+  [slot='drawer']:is(header, footer) {
+    display: flex;
+    align-items: center;
+    gap: var(--lumo-space-s);
+    padding: var(--lumo-space-s) var(--lumo-space-m);
+    min-height: var(--lumo-size-xl);
+    box-sizing: border-box;
+  }
+  
+  [slot='drawer']:is(header, footer):is(:empty) {
+    display: none;
+  }
+  

@@ -8,8 +8,6 @@ import scala.scalajs.js.annotation
 import org.scalajs.dom
 
 import webcomponents.vaadin
-import webcomponents.vaadin.Icon.icon
-import webcomponents.vaadin.AppLayout.primarySection
 
 
 object Main {
@@ -28,8 +26,15 @@ object Main {
                 slot("drawer"),
                 vaadin.SideNav(
                     vaadin.SideNav.SideNavItem(
-                        vaadin.Icon(icon("vaadin:dashboard"), slot("prefix")),
-                        "Demo"
+                        vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
+                        _.path("/"),
+                        "Button"
+                    ),
+
+                    vaadin.SideNav.SideNavItem(
+                        vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
+                        _.path("/text-field"),
+                        "TextField"
                     )
                 )
             ),
