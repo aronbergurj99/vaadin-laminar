@@ -14,12 +14,16 @@ trait AppScalaJSModule extends AppScalaModule with ScalaJSModule {
 
   def ivyDeps = Agg(
     ivy"org.scala-js::scalajs-dom::2.8.0",
-    ivy"com.raquo::laminar::17.2.0")
+    ivy"com.raquo::laminar::17.2.0",
+    )
 }
 
 object `package` extends RootModule with AppScalaJSModule {
   object `vaadin-components` extends AppScalaJSModule 
   object example extends AppScalaJSModule {
     def moduleDeps = Seq(`vaadin-components`)
+    def ivyDeps = Agg(
+      ivy"dev.frontroute::frontroute::0.19.1"
+    )
   }
 }

@@ -1,6 +1,7 @@
 package example
 
 import com.raquo.laminar.api.L.{*, given}
+import frontroute.*
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation
@@ -8,6 +9,9 @@ import scala.scalajs.js.annotation
 import org.scalajs.dom
 
 import webcomponents.vaadin
+import example.examples.Example
+import example.examples.ButtonExample
+import example.examples.TextFieldExample
 
 
 object Main {
@@ -27,22 +31,24 @@ object Main {
                 vaadin.SideNav(
                     vaadin.SideNav.SideNavItem(
                         vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
-                        _.path("/"),
-                        "Button"
+                        _.path("/button"),
+                        "Button",
+                        onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/button") }
                     ),
 
                     vaadin.SideNav.SideNavItem(
                         vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
                         _.path("/text-field"),
-                        "TextField"
+                        "TextField",
+                        onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/text-field") }
                     )
                 )
             ),
-            div(
-                className("flex", "gap-s", "p-m"),
-                vaadin.Button("enabled"),
-                vaadin.Button("disabled", disabled(true)),
-                vaadin.TextField(_.label("hello world"))
+            routes(
+                div(
+                    ButtonExample(),
+                    TextFieldExample(),
+                )
             )
         )
 }
