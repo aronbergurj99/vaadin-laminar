@@ -1,4 +1,3 @@
-import "construct-style-sheets-polyfill"
 import 'scalajs:main.js'
 
 import { typography, spacing, color, sizing, utility  } from '@vaadin/vaadin-lumo-styles'
