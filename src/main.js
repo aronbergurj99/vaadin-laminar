@@ -1,16 +1,17 @@
+import { typography, spacing, color, utility, badge,} from '@vaadin/vaadin-lumo-styles'
+import { addLumoGlobalStyles } from "@vaadin/vaadin-lumo-styles/global"
+
 import 'scalajs:main.js'
 
-import { typography, spacing, color, sizing, utility  } from '@vaadin/vaadin-lumo-styles'
-import { addLumoGlobalStyles } from "@vaadin/vaadin-lumo-styles/global"
 
 const globalStyles = { 
     typography, 
-    spacing,
     color,
-    sizing,
-    utility
+    spacing,
+    badge,
+    utility,
 }
 
 Object.keys(globalStyles).forEach(key => {
-    addLumoGlobalStyles(key, globalStyles[key])
+    addLumoGlobalStyles(key, globalStyles[key].cssText)
 })

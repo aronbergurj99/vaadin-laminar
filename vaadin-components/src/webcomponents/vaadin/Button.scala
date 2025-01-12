@@ -23,7 +23,7 @@ import com.raquo.laminar.keys.HtmlAttr
   */
 object Button extends WebComponent {
   @js.native
-  @JSImport("@vaadin/button/vaadin-button.js", JSImport.Default)
+  @JSImport("@vaadin/button", JSImport.Default)
   object RawImport extends js.Object
 
   type Ref = dom.html.Element & js.Object

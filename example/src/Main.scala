@@ -21,7 +21,12 @@ object Main {
     def appElement = 
         div(
             vaadin.AppLayout(
-                h1("Hello world", slot("navbar"), className("text-l m-0"))
+                vaadin.AppLayout.DrawerToggle(slot("navbar")),
+                h1("Hello world", slot("navbar"), className("text-l m-0")),
+                vaadin.Scroller(
+                    slot("drawer"),
+                    vaadin.SideNav()
+                )
             )
         )
 }
