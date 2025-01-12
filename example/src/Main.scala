@@ -7,24 +7,21 @@ import scala.scalajs.js.annotation
 
 import org.scalajs.dom
 
-import webcomponents.vaadin.Button
+import webcomponents.vaadin
 
 
 object Main {
     def main(args: Array[String]): Unit = {
-        println("hello world")
         renderOnDomContentLoaded(
             dom.document.getElementById("app"),
             appElement,
         )
     }
 
-
     def appElement = 
         div(
-            h1(
-                Button("disabled", disabled(true)),
-                Button("enabled")
+            vaadin.AppLayout(
+                h1("Hello world", slot("navbar"), className("text-l m-0"))
             )
         )
 }
