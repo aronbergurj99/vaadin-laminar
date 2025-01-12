@@ -22,6 +22,9 @@ object AppLayout extends WebComponent {
 
     protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-app-layout")
 
+    /**
+    * Todo: write doc, implement missing API, WIP!
+    */
     object DrawerToggle extends WebComponent {
         @js.native
         @JSImport("@vaadin/app-layout/vaadin-drawer-toggle", JSImport.Default)

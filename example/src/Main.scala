@@ -8,6 +8,7 @@ import scala.scalajs.js.annotation
 import org.scalajs.dom
 
 import webcomponents.vaadin
+import webcomponents.vaadin.Icon.icon
 
 
 object Main {
@@ -25,7 +26,12 @@ object Main {
                 h1("Hello world", slot("navbar"), className("text-l m-0")),
                 vaadin.Scroller(
                     slot("drawer"),
-                    vaadin.SideNav()
+                    vaadin.SideNav(
+                        vaadin.SideNav.SideNavItem(
+                            vaadin.Icon(icon("vaadin:dashboard"), slot("prefix")),
+                            "hello world",
+                        )
+                    )
                 )
             )
         )

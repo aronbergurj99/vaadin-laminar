@@ -13,7 +13,7 @@ import com.raquo.laminar.tags.CustomHtmlTag
   */
 object SideNav extends WebComponent {
     @js.native
-    @JSImport("@vaadin/side-nav/vaadin-side-nav.js", JSImport.Default)
+    @JSImport("@vaadin/side-nav", JSImport.Default)
     object RawImport extends js.Object
 
     type Ref = dom.html.Element & js.Object
@@ -21,4 +21,19 @@ object SideNav extends WebComponent {
     used(RawImport)
 
     protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-side-nav")
+
+    /**
+      * Todo: write doc, implement missing API, WIP!
+      */
+    object SideNavItem extends WebComponent {
+      @js.native
+      @JSImport("@vaadin/side-nav/vaadin-side-nav-item", JSImport.Default)
+      object RawImport extends js.Object
+
+      type Ref = dom.html.Element & js.Object
+
+      used(RawImport)
+
+      protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-side-nav-item")
+    }
 }
