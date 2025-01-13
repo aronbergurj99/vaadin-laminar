@@ -45,19 +45,34 @@ final class Renderer[A](override val name: String) extends Key {
 
         }, (element: ReactiveHtmlElement.Base, prop: Renderer[A], value: RendererProp) => {
             element.amend(onUnmountCallback { _ => 
-                maybeRoot match
-                    case Some(root) => {
-                        root.unmount()
-                        maybeRoot = None
-                        println("unmounting")
-                    }
-                    case None => println("No need to unmount never mounted")
-                
+                maybeRoot.foreach((root) => {
+                    root.unmount()
+                })
+                maybeRoot = None
             }).ref.asInstanceOf[js.Dynamic].updateDynamic(prop.name)(value.asInstanceOf[js.Any])
         })
     }
 
     // For grid
-    // The render func is called each time the 
+    // The render func is called each time the underlying model is called.
+
+    /* 
+
+    case class Person(name: String, age: Int)
+
+    vaadin.Grid.of[Person](
+        _.items = [Person("aron", 35)],
+        vaadin.Column.of[Int](
+            _.path = "name"
+            _.content { column =>
+                div(h1(column))
+            }
+
+        vaadin.Column(
+            _.path = "age"
+        )
+    ) 
+
+    */
 
 }

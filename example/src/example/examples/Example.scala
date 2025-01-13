@@ -2,10 +2,8 @@ package example.examples
 import com.raquo.laminar.api.L.{*, given}
 import frontroute.*
 import webcomponents.vaadin
-import webcomponents.vaadin.withItems
 import scala.collection.mutable
 import scala.scalajs.js
-import webcomponents.vaadin.MultiSelectComboBox.items
 import webcomponents.vaadin.Item
 
 import org.scalajs.dom
@@ -58,22 +56,6 @@ object DialogExample extends Example("dialog") {
                 vaadin.Button("open", onClick --> (_ => {
                     dialogToggle.update(!_)
                 })),
-                // Workign example
-                // vaadin.Dialog(opened <-- dialogToggle.signal, _ => onMountCallback(ctx => {
-                //     ctx.thisNode.ref.renderer = (el: dom.Element, ref: vaadin.Dialog.Ref) => {
-                //         el.innerHTML = "<div><h1>Hello world</h1></div>"
-                //         ()
-                //     }
-                // }) ),
-
-                // another working example
-                // vaadin.Dialog(opened <-- dialogToggle.signal, inContext { ctx => 
-                //     ctx.ref.renderer = (el: dom.Element, ref: vaadin.Dialog.Ref) => {
-                //         el.innerHTML = "<div><h1>Hello world</h1></div>"
-                //         ()
-                //     }
-                //         ctx
-                //     })
 
                 vaadin.Dialog(opened <-- dialogToggle.signal, _.content := div(
                     h1("hello world"),

@@ -13,12 +13,6 @@ import com.raquo.laminar.codecs.AsIsCodec
 import scala.collection.mutable
 import com.raquo.laminar.keys.HtmlProp
 
-@js.native
-trait withItems[A] extends js.Object {
-  // var items: mutable.Seq[mutable.Map[String, A]] = js.native
-  var items: js.Array[js.Dictionary[A]]
-}
-
 trait Item extends js.Object {
   val value: String
   val label: String
