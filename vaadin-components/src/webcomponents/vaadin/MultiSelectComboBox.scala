@@ -27,7 +27,7 @@ trait Item extends js.Object {
 /**
   * Todo: write doc, implement missing API, WIP!
   */
-object MultiSelectComboBox extends WebComponent {
+ object MultiSelectComboBox extends WebComponent {
     @js.native
     @JSImport("@vaadin/multi-select-combo-box", JSImport.Default)
     object RawImport extends js.Object

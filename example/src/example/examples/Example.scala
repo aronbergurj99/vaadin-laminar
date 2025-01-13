@@ -8,6 +8,9 @@ import scala.scalajs.js
 import webcomponents.vaadin.MultiSelectComboBox.items
 import webcomponents.vaadin.Item
 
+import org.scalajs.dom
+import webcomponents.vaadin.Dialog.opened
+
 trait Example(val component: String) {
     def examples: HtmlElement
 
@@ -41,5 +44,45 @@ object SelectExample extends Example("select") {
                 val value = "hello"
                 val label = "some"}))
         }
+    }
+}
+
+object DialogExample extends Example("dialog") {
+    def updatingSignal = {
+        EventStream.periodic(1000)
+    }
+    def examples: HtmlElement = {
+        val dialogToggle = Var(false)
+        ExamplePanel("Dialog") {
+            div(
+                vaadin.Button("open", onClick --> (_ => {
+                    dialogToggle.update(!_)
+                })),
+                // Workign example
+                // vaadin.Dialog(opened <-- dialogToggle.signal, _ => onMountCallback(ctx => {
+                //     ctx.thisNode.ref.renderer = (el: dom.Element, ref: vaadin.Dialog.Ref) => {
+                //         el.innerHTML = "<div><h1>Hello world</h1></div>"
+                //         ()
+                //     }
+                // }) ),
+
+                // another working example
+                // vaadin.Dialog(opened <-- dialogToggle.signal, inContext { ctx => 
+                //     ctx.ref.renderer = (el: dom.Element, ref: vaadin.Dialog.Ref) => {
+                //         el.innerHTML = "<div><h1>Hello world</h1></div>"
+                //         ()
+                //     }
+                //         ctx
+                //     })
+
+                vaadin.Dialog(opened <-- dialogToggle.signal, _.content := div(
+                    h1("hello world"),
+                    text <-- updatingSignal,
+                    vaadin.Button("i am groot", onClick --> { _ =>
+                        dom.console.log("GROOT IS CALLING FROM MODAL")
+                    })
+                ))
+            )
+        }         
     }
 }
