@@ -16,6 +16,7 @@ import example.examples.SelectExample
 import webcomponents.vaadin.Dialog
 import example.examples.DialogExample
 import example.examples.GridExample
+import com.vaadin.flow.theme.lumo.LumoUtility
 
 
 object Main {
@@ -29,6 +30,7 @@ object Main {
 
     def appElement = 
         vaadin.AppLayout(
+            className(LumoUtility.Background.SHADE_70),
             h1("vaadin-laminar", slot("navbar"), className("text-l m-0 ml-m")),
             vaadin.Scroller(
                 slot("drawer"),

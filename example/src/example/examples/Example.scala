@@ -5,15 +5,26 @@ import webcomponents.vaadin
 import scala.collection.mutable
 import scala.scalajs.js
 import webcomponents.vaadin.Item
-
 import org.scalajs.dom
+import com.vaadin.flow.theme.lumo.{ LumoUtility }
 
-trait Example(val component: String) {
+abstract class Example(val component: String) {
     def examples: HtmlElement
 
     def apply() = {
         path(this.component) {
-            examples
+            div(
+                className(
+                    LumoUtility.MaxWidth.SCREEN_MEDIUM,
+                    LumoUtility.Margin.AUTO,
+                    LumoUtility.Padding.Top.XLARGE,
+                    LumoUtility.Display.FLEX,
+                    LumoUtility.FlexDirection.COLUMN,
+                    LumoUtility.Gap.MEDIUM,
+                ),
+                h1("Grid"),
+                examples
+            )
         }
     }
 }
@@ -81,7 +92,7 @@ object GridExample extends Example("grid") {
                         js.Dynamic.literal("name" -> "PO0002", "age" -> 23)
                     ))
 
-        ExamplePanel("Grid") {
+        ExamplePanel("Simple Grid") {
             div(
                 vaadin.grid.Grid(
                     _.items <-- items,

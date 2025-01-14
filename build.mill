@@ -23,7 +23,8 @@ object `package` extends RootModule with AppScalaJSModule {
   object example extends AppScalaJSModule {
     def moduleDeps = Seq(`vaadin-components`)
     def ivyDeps = Agg(
-      ivy"dev.frontroute::frontroute::0.19.1"
+      ivy"dev.frontroute::frontroute::0.19.1",
+      ivy"com.vaadin:vaadin-lumo-theme:24.6.1"
     )
   }
 }
