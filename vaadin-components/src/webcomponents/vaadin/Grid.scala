@@ -32,9 +32,26 @@ object grid {
     }  
 
     
-    object Column {
+    
+    protected  class BaseColumn[Item <: js.Object | String] extends WebComponent {
+        import Column.*
+
+        trait RawElement extends js.Object    
+
+        type Ref = dom.html.Element with RawElement
+
+        protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-grid-column") 
+
+        lazy val path: HtmlAttr[String] = htmlAttr("path", StringAsIsCodec)
+        lazy val header: HtmlAttr[String] = htmlAttr("header", StringAsIsCodec)
+
+        lazy val content = new RendererProp[Model[Item]]("renderer")
+    }
+    
+    object Column extends BaseColumn[js.Object]{
+
         trait Model[Item <: js.Object | String] extends js.Object {
-            val items: Item
+            val item: Item
         }
     
         class Column[Item <: js.Object | String] extends WebComponent {
@@ -56,16 +73,8 @@ object grid {
 
         used(RawImport)
 
-        def apply = {
-            new Column[js.Object]
-        }
-
-        def default = {
-            apply
-        }
-
-        def withItem[Item <: js.Object | String ]: Column[Item] = {
-            new Column[Item]()
+        def withItem[Item <: js.Object | String]: BaseColumn[Item] = {
+            new BaseColumn[Item] {}
         }
     }
 }

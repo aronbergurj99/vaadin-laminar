@@ -55,14 +55,15 @@ object DialogExample extends Example("dialog") {
                 vaadin.Button("open", onClick --> (_ => {
                     dialogToggle.update(!_)
                 })),
-                vaadin.Dialog(_.opened <-- dialogToggle.signal, _.content := { _ =>
+                vaadin.Dialog(_.opened <-- dialogToggle.signal, _.content :=
                     div(
                         vaadin.Button("i am groot", onClick --> { _ =>
                             dom.console.log("GROOT IS CALLING FROM MODAL")
                         }),
+                        text <-- updatingSignal,
                         h1("hello world")
                     )
-                })
+                )
             )
         }         
     }
@@ -75,26 +76,27 @@ object GridExample extends Example("grid") {
         val age: Int
     }
     def examples: HtmlElement = {
+        val items: Var[js.Array[js.Object]] = Var(js.Array(
+                        js.Dynamic.literal("name" -> "PO0001", "age" -> 25),
+                        js.Dynamic.literal("name" -> "PO0002", "age" -> 23)
+                    ))
+
         ExamplePanel("Grid") {
             div(
                 vaadin.grid.Grid(
-                    _.items := js.Array(
+                    _.items <-- items,
+                    vaadin.grid.Column(_.path("name"), _.header("Name")),
+                    vaadin.grid.Column(_.path("age"), _.header("Age")),
+                    vaadin.grid.Column.withItem[Person](_.header("action"), _.content := { model => 
+                        vaadin.Button(s"${model.item.name} - ${model.item.age}")
+                    })
+                ),
+                vaadin.Button(onClick --> {_ => items.set(js.Array(js.Dynamic.literal("name" -> "Aron", "age" -> 25)))}, "clear"),
+                vaadin.Button(onClick --> {_ => items.set(js.Array(
                         js.Dynamic.literal("name" -> "Aron", "age" -> 25),
                         js.Dynamic.literal("name" -> "Bryndis", "age" -> 23)
-                        ),
-                    vaadin.grid.Column.default(_.path("name"), _.header("Name")),
-                    vaadin.grid.Column.default(_.path("age"), _.header("Age")),
-                    vaadin.grid.Column.withItem[Person](_.header("action"), _.content := { model =>
-                        println(model)
-                        div("hello")
-                    }),
-                    // vaadin.grid.Column()(_.path := "name", _.header := "Name"),
-                    // vaadin.grid.Column(_.path := "age", _.header := "Age"),
-                    // vaadin.grid.Column(_.header := "Actions")
-                )
+                        ))}, "set")
             )
-
         }
     }
-
 }

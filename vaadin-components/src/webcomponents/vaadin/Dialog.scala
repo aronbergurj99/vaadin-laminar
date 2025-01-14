@@ -9,7 +9,7 @@ import com.raquo.laminar.tags.CustomHtmlTag
 import org.scalajs.dom.html.Element
 import com.raquo.laminar.api.L.{*, given}
 import com.raquo.laminar.codecs.BooleanAsIsCodec
-import webcomponents.vaadin.internal.RendererProp
+import webcomponents.vaadin.internal.ContentProp
 
 object Dialog extends WebComponent {
     trait RawElement extends js.Object {
@@ -29,5 +29,5 @@ object Dialog extends WebComponent {
     lazy val opened: HtmlProp[Boolean, Boolean] = htmlProp("opened", BooleanAsIsCodec)
 
     // lazy val content: Renderer[js.Function] = Renderer[js.Function]("renderer")
-    lazy val content = new RendererProp[Unit]("renderer")
+    lazy val content = new ContentProp("renderer")
 }
