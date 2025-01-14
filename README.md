@@ -5,4 +5,4 @@ This project provides Laminar bindings for Vaadin Web Components, enabling seaml
 
 ## Inspiration
 
-The implementation is inspired by [LaminarSAPUI5Bindings](https://github.com/sherpal/LaminarSAPUI5Bindings).
+The implementation is inspired by [LaminarSAPUI5Bindings](https://github.com/sherpal/LaminarSAPUI5Bindings) and [LaminarSAPUI5Bindings](https://github.com/raquo/laminar-shoelace-components).
