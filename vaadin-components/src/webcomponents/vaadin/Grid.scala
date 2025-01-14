@@ -7,19 +7,66 @@ import org.scalajs.dom
 
 import com.raquo.laminar.api.L.{*, given}
 import com.raquo.laminar.tags.CustomHtmlTag
+import com.raquo.laminar.codecs.{StringAsIsCodec, AsIsCodec}
+
 
 import webcomponents.WebComponent
+import webcomponents.vaadin.internal.RendererProp
 
-@js.native 
-@JSImport("@vaadin/grid", JSImport.Default)
-object RawImport extends js.Object
+object grid {
+    object Grid extends WebComponent {
+        trait RawElement extends js.Object    
+    
+        @js.native 
+        @JSImport("@vaadin/grid", JSImport.Default)
+        object RawImport extends js.Object
+    
+        type Ref = dom.html.Element with RawElement
+    
+        used(RawImport)
+    
+        protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-grid")
 
-class Grid(val testing: String) extends WebComponent{
-    trait RawElement extends js.Object    
+        lazy val items: HtmlProp[js.Array[js.Object], _] = htmlProp("items", AsIsCodec())
+    
+    }  
 
-    type Ref = dom.html.Element with RawElement
+    
+    object Column {
+        trait Model[Item <: js.Object | String] extends js.Object {
+            val items: Item
+        }
+    
+        class Column[Item <: js.Object | String] extends WebComponent {
+            trait RawElement extends js.Object    
+            type Ref = dom.html.Element with RawElement
+            protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-grid-column") 
+        
+        
+            lazy val path: HtmlAttr[String] = htmlAttr("path", StringAsIsCodec)
+            lazy val header: HtmlAttr[String] = htmlAttr("header", StringAsIsCodec)
+    
+            lazy val content = new RendererProp[Model[Item]]("renderer")
+        }
+    
+        @js.native 
+        @JSImport("@vaadin/grid/vaadin-grid-column", JSImport.Default)
+        object RawImport extends js.Object
 
-    used(RawImport)
 
-    protected val tag: CustomHtmlTag[Ref] = CustomHtmlTag("vaadin-grid")
-}  
+        used(RawImport)
+
+        def apply = {
+            new Column[js.Object]
+        }
+
+        def default = {
+            apply
+        }
+
+        def withItem[Item <: js.Object | String ]: Column[Item] = {
+            new Column[Item]()
+        }
+    }
+}
+

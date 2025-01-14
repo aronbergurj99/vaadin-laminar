@@ -13,45 +13,63 @@ import com.raquo.laminar.nodes.ReactiveElement.Base
 import com.raquo.laminar.modifiers.KeySetter.PropSetter
 import com.raquo.laminar.modifiers.KeySetter
 import webcomponents.WebComponent
+
 import com.raquo.laminar.DomApi
 import com.raquo.laminar.nodes.ReactiveElement
 import com.raquo.laminar.nodes.ReactiveHtmlElement
 import com.raquo.laminar.keys.{Key}
+import com.raquo.laminar.codecs.Codec
+import com.raquo.laminar.api.L
+import com.raquo.laminar.modifiers.Modifier
+import org.w3c.dom.html.HTMLHtmlElement
+import com.raquo.laminar.keys.HtmlProp
+import org.scalajs.dom.HTMLElement
 
-type RendererProp = js.Function2[dom.Element, Any, Unit]
 
-/* 
-Draft
-
-We want to be able to do
-dialog(content <-- div("hello"), headerContent <-- div("my header") )
-
-Instead of providing low level javascript render func
-*/
-final class Renderer[A](override val name: String) extends Key {
-    private val renderer: HtmlProp[RendererProp,RendererProp] = htmlProp(name, AsIsCodec())
-
-    // We don't have a render root until the first call to renderer function
+final class RendererProp[A](override val name: String) extends Key {
     var maybeRoot: Option[RootNode] = None
+    var maybeModel: Option[Var[A]] = None
 
-    // Todo: hacky prototype as proof of concept
-    // Works for components that should rerender (Throw state) like dialogs
-    def :=(element: HtmlElement) = {
-        new KeySetter[Renderer[A], RendererProp, HtmlElement](this, (el: dom.Element, ref: Any) => {
-            maybeRoot match {
-                case None => maybeRoot = Some(render(el, element))
-                case Some(_) => println("Re opened")
-            }
+    val modelEventBus = EventBus[A]()
+    var modelSignal: Signal[A] = null 
 
-        }, (element: ReactiveHtmlElement.Base, prop: Renderer[A], value: RendererProp) => {
-            element.amend(onUnmountCallback { _ => 
-                maybeRoot.foreach((root) => {
-                    root.unmount()
-                })
-                maybeRoot = None
-            }).ref.asInstanceOf[js.Dynamic].updateDynamic(prop.name)(value.asInstanceOf[js.Any])
+    def apply(element: ReactiveElement.Base) =  {
+        element.amend(onUnmountCallback { _ => 
+            maybeRoot.foreach(_.unmount())
+            maybeRoot = None
         })
     }
+
+    protected val renderer: HtmlProp[js.Function, _] = htmlProp(name, AsIsCodec())
+
+    def :=(content: HtmlElement | Function1[Signal[A], HtmlElement]) = {
+        Modifier[ReactiveHtmlElement.Base] { parent =>
+            this(parent) // Start by setting unmount callback
+
+
+            def renderFunc = (el: dom.Element, ref: js.Any, model: A) => {
+                println(s"render: ${el.hashCode()}")
+                if (modelSignal == null)
+                then modelSignal = modelEventBus.events.startWith(model)
+                else modelEventBus.emit(model)
+
+                    
+                if (maybeRoot.isEmpty)
+                then {
+                    val element = content match
+                        case signalToElem: Function[_ >: Signal[A], _ <: ReactiveHtmlElement.Base] => {
+                            signalToElem(modelSignal)
+                        }
+                        case _: HtmlElement => content.asInstanceOf[ReactiveHtmlElement.Base]
+
+                    maybeRoot = Some(render(el, element))
+                }
+            }
+
+            renderer.apply(renderFunc).apply(parent)
+        }
+    }
+}
 
     // For grid
     // The render func is called each time the underlying model is called.
@@ -74,5 +92,3 @@ final class Renderer[A](override val name: String) extends Key {
     ) 
 
     */
-
-}

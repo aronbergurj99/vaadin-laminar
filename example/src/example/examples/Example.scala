@@ -7,7 +7,6 @@ import scala.scalajs.js
 import webcomponents.vaadin.Item
 
 import org.scalajs.dom
-import webcomponents.vaadin.Dialog.opened
 
 trait Example(val component: String) {
     def examples: HtmlElement
@@ -56,15 +55,46 @@ object DialogExample extends Example("dialog") {
                 vaadin.Button("open", onClick --> (_ => {
                     dialogToggle.update(!_)
                 })),
-
-                vaadin.Dialog(opened <-- dialogToggle.signal, _.content := div(
-                    h1("hello world"),
-                    text <-- updatingSignal,
-                    vaadin.Button("i am groot", onClick --> { _ =>
-                        dom.console.log("GROOT IS CALLING FROM MODAL")
-                    })
-                ))
+                vaadin.Dialog(_.opened <-- dialogToggle.signal, _.content := { _ =>
+                    div(
+                        vaadin.Button("i am groot", onClick --> { _ =>
+                            dom.console.log("GROOT IS CALLING FROM MODAL")
+                        }),
+                        h1("hello world")
+                    )
+                })
             )
         }         
     }
+}
+
+
+object GridExample extends Example("grid") {
+    trait Person extends js.Object {
+        val name: String
+        val age: Int
+    }
+    def examples: HtmlElement = {
+        ExamplePanel("Grid") {
+            div(
+                vaadin.grid.Grid(
+                    _.items := js.Array(
+                        js.Dynamic.literal("name" -> "Aron", "age" -> 25),
+                        js.Dynamic.literal("name" -> "Bryndis", "age" -> 23)
+                        ),
+                    vaadin.grid.Column.default(_.path("name"), _.header("Name")),
+                    vaadin.grid.Column.default(_.path("age"), _.header("Age")),
+                    vaadin.grid.Column.withItem[Person](_.header("action"), _.content := { model =>
+                        println(model)
+                        div("hello")
+                    }),
+                    // vaadin.grid.Column()(_.path := "name", _.header := "Name"),
+                    // vaadin.grid.Column(_.path := "age", _.header := "Age"),
+                    // vaadin.grid.Column(_.header := "Actions")
+                )
+            )
+
+        }
+    }
+
 }

@@ -15,6 +15,7 @@ import example.examples.TextFieldExample
 import example.examples.SelectExample
 import webcomponents.vaadin.Dialog
 import example.examples.DialogExample
+import example.examples.GridExample
 
 
 object Main {
@@ -55,6 +56,12 @@ object Main {
                         _.path("/dialog"),
                         "Dialog",
                         onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/dialog") }
+                    ),
+                    vaadin.SideNav.SideNavItem(
+                        vaadin.Icon(_.icon("vaadin:dashboard"), slot("prefix")),
+                        _.path("/grid"),
+                        "Grid",
+                        onClick.preventDefault --> { _ => BrowserNavigation.pushState(url = "/grid") }
                     )
                 )
             ),
@@ -63,7 +70,8 @@ object Main {
                     ButtonExample(),
                     TextFieldExample(),
                     SelectExample(),
-                    DialogExample()
+                    DialogExample(),
+                    GridExample()
                 )
             )
         )
